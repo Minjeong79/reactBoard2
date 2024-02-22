@@ -26,7 +26,7 @@ type Action = {
 interface FormType {
   uid: string;
   displayName: string;
-  timeData: string;
+  timeData: Date;
   title: string;
   content: string;
   isModify: boolean;
@@ -36,7 +36,7 @@ interface FormType {
 const initialUserForm: FormType = {
   uid: "",
   displayName: "",
-  timeData: "",
+  timeData: new Date(),
   title: "",
   content: "",
   isModify: false,
@@ -179,13 +179,21 @@ const BoardPage = () => {
         console.error("Error getting download URLs:", error);
       });
   }, []);
+  const timeFuc = (timestamp: firestore.Timestamp) => {
+    const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6;
+    const date = new Date(milliseconds);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}.${month}.${day}`;
+  };
   return (
     <section>
       <div className="mt-8">
         <p className="p-2 border-b"> {userDataList.title} </p>
         <p className="p-2 text-right">
           {userDataList.displayName}
-          <span className="text-xs ml-2">{userDataList.timeData}</span>
+          <span className="text-xs ml-2">{timeFuc(userDataList.timeData)}</span>
         </p>
 
         <div className="p-2 h-80 border-b overflow-y-auto">

@@ -20,7 +20,7 @@ type Action = {
 interface FormType {
   uid: string;
   displayName: string;
-  timeData: string;
+  timeData: Date;
   title: string;
   content: string;
   isModify: boolean;
@@ -31,7 +31,7 @@ const initialUserForm: FormType[] = [
   {
     uid: "",
     displayName: "",
-    timeData: "",
+    timeData: new Date(),
     title: "",
     content: "",
     isModify: false,
@@ -81,14 +81,14 @@ const BoardWrite = () => {
   const storage = getStorage(firebaseApp);
 
   const date = new Date();
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
-  const parts = formattedDate.split("/");
-  const result = `${parts[2]}.${parts[0]}.${parts[1]}`;
-
+  // const formattedDate = new Intl.DateTimeFormat("en-US", {
+  //   year: "numeric",
+  //   month: "2-digit",
+  //   day: "2-digit",
+  // }).format(date);
+  // const parts = formattedDate.split("/");
+  // const result = `${parts[2]}.${parts[0]}.${parts[1]}`;
+ 
   const formContentValu = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -100,7 +100,7 @@ const BoardWrite = () => {
       const inputDb = {
         uid: userLoginUid,
         displayName: userLogindisplayName,
-        timeData: result,
+        timeData: date,
         title: formValue.title,
         content: formValue.content,
         isModify: false,
@@ -136,7 +136,7 @@ const BoardWrite = () => {
       const inputDb = {
         uid: userLoginUid,
         displayName: userLogindisplayName,
-        timeData: result,
+        timeData: date,
         title: formModifyValue.title,
         content: formModifyValue.content,
         isModify: true,

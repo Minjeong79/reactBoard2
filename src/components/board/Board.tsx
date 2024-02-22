@@ -1,12 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getDocs } from "firebase/firestore";
+import { getDocs, Timestamp } from "firebase/firestore";
 import { BoardHeadercontext } from "../context/BoardContext";
 
 interface FormType {
   uid: string;
   displayName: string;
-  timeData: string;
+  timeData: Timestamp;
   title: string;
   content: string;
   isModify: boolean;
@@ -16,7 +16,7 @@ const initialUserForm: FormType[] = [
   {
     uid: "",
     displayName: "",
-    timeData: "",
+    timeData: Timestamp.now(),
     title: "",
     content: "",
     isModify: false,
@@ -79,6 +79,14 @@ const Board = () => {
     return paginationNumberGroup;
   };
 
+    const timeFuc = (timestamp: Timestamp) => {
+    const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6;
+    const date = new Date(milliseconds);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}.${month}.${day}`;
+  };
   return (
     <div className="">
       {/* <div className="flex ">
@@ -114,8 +122,11 @@ const Board = () => {
       </ul>
       <div className="m-1">
         <ul>
-          {getItemsForPage(currentPage).map((item, index) => (
-            <li
+          {getItemsForPage(currentPage).map((item, index) =>   {
+            console.log(typeof item.timeData)
+            const timestamp = item.timeData as Timestamp;
+            return(
+              <li
               key={index}
               className="items-center cursor-pointer mb-2 rounded p-5 border-solid border-indigo-400 customBorder flex hover:bg-blue-100"
             >
@@ -126,12 +137,14 @@ const Board = () => {
                 <div className="flex-none w-14 ">{index}</div>
                 <div className="w-72 truncate text-center">{item.title}</div>
                 <div className="flex-none text-xs text-slate-500 ">
-                  <span className="mr-1.5">{item.timeData}</span>
+                  <span className="mr-1.5">{timeFuc(timestamp)}</span>
                   <span>{item.displayName}</span>
                 </div>
               </Link>
             </li>
-          ))}
+            )
+          }  
+          )}
         </ul>
       </div>
       <div className="text-right">
