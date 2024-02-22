@@ -118,7 +118,7 @@ const BoardWrite = () => {
     }
   };
   // console.log(strId);
-  //데이터 출력
+  //데이터 출력ddddd
   const userData = async () => {
     const userDocRef = await getDocs(userCollection);
     userDocRef.docs.map((i) => {

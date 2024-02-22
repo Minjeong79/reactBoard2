@@ -197,7 +197,7 @@ const BoardPage = () => {
         </p>
 
         <div className="p-2 h-80 border-b overflow-y-auto">
-          {userDataList.content}
+          {userDataList.contentdd}
           {imgList.map((item, index) => (
             <div key={index}>
               <img src={item} alt={`Image ${index}`} />

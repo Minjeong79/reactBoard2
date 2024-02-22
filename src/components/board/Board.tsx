@@ -168,7 +168,7 @@ const Board = () => {
                 }
               }}
             >
-              이전
+              이전cc
             </span>
           </li>
           {handlerenderPagenation()}
