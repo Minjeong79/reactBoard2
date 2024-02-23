@@ -134,7 +134,7 @@ const App = () => {
 
   return (
     <BoardHeadercontext.Provider value={memoziedDispatches}>
-      <div className="md:container mx-auto">
+      <div className="md:max-w-screen-md lg:max-w-screen-lg mx-auto">
         <Header />
 
         <Routes>

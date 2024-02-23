@@ -1,4 +1,4 @@
-import { useState, useContext, useReducer, useEffect } from "react";
+import { useState, useContext, useReducer, useEffect, useRef } from "react";
 import { BoardHeadercontext } from "../context/BoardContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { customAlphabet } from "nanoid";
@@ -57,9 +57,9 @@ const BoardWrite = () => {
   const userLoginUid = userLogin.uid;
   const userLogindisplayName = userLogin.displayName;
 
+  const imgRef = useRef<HTMLDivElement>(null);
   const [strId, setStrId] = useState("");
-  console.log(strId);
-  console.log(paramsId.id);
+
   //데이터 등록
   const [userFormVar, dispatch] = useReducer(reducer, initialUserForm);
   console.log(userFormVar);
@@ -78,17 +78,10 @@ const BoardWrite = () => {
   const [imageUpload, setImageUpload] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [oldimageNameUrl, setOldImageNameUrl] = useState("");
+  const [imgCheck, setImgCheck] = useState(false);
   const storage = getStorage(firebaseApp);
 
   const date = new Date();
-  // const formattedDate = new Intl.DateTimeFormat("en-US", {
-  //   year: "numeric",
-  //   month: "2-digit",
-  //   day: "2-digit",
-  // }).format(date);
-  // const parts = formattedDate.split("/");
-  // const result = `${parts[2]}.${parts[0]}.${parts[1]}`;
- 
   const formContentValu = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -117,8 +110,7 @@ const BoardWrite = () => {
       console.log(error);
     }
   };
-  // console.log(strId);
-  //데이터 출력ddddd
+  //데이터 출력
   const userData = async () => {
     const userDocRef = await getDocs(userCollection);
     userDocRef.docs.map((i) => {
@@ -132,6 +124,11 @@ const BoardWrite = () => {
   //수정
   const formMotifyClick = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!formModifyValue.title || !formModifyValue.content) {
+      window.confirm("수정할 제목과 내용을 입력 해주세요");
+      return;
+    }
     try {
       const inputDb = {
         uid: userLoginUid,
@@ -146,6 +143,9 @@ const BoardWrite = () => {
         type: "CREATE",
         payload: inputDb,
       });
+      if (imgCheck) {
+        handleOldImageDelete();
+      }
       await setDoc(doc(userCollection, paramsId.id), inputDb);
       nav(`/page/${paramsId.id}`, { state: { payload: inputDb } });
 
@@ -200,24 +200,33 @@ const BoardWrite = () => {
       });
     });
   };
-  //수정 업로드 할 이미지 삭제
-  const handleOldImageDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const desertRef = ref(storage, imageUrl);
+
+  const handleOleImgeNblock = () => {
+    setImgCheck(true);
+    imgRef.current?.classList.add("hidden");
+  };
+  //수정 할 때 기존 이미지 삭제
+  const handleOldImageDelete = () => {
+    const desertRef = ref(storage, oldimageNameUrl);
     deleteObject(desertRef)
       .then(() => {
-        setImageUrl("");
+        setOldImageNameUrl("");
         console.log("삭제 완료");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  console.log(paramsId.id);
+
+  const handleCancle = async () => {
+    window.confirm("작성을 취소 하시겠습니까?");
+    imgRef.current?.classList.remove("hidden");
+    nav(`/`);
+  };
+
   useEffect(() => {
     const storage = getStorage(firebaseApp);
     const imageRef = ref(storage, `images/${paramsId.id}/`);
-    console.log(imageRef);
     listAll(imageRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
@@ -269,7 +278,10 @@ const BoardWrite = () => {
                     })
                   }
                 />
-                <img src={oldimageNameUrl} />
+                <div ref={imgRef}>
+                  <img src={oldimageNameUrl} />
+                </div>
+
                 <img src={imageUrl} />
               </div>
               <div>
@@ -303,7 +315,7 @@ const BoardWrite = () => {
                 </button>
                 <button
                   className="bg-gray-500 p-1 rounded"
-                  onClick={handleOldImageDelete}
+                  onClick={handleOleImgeNblock}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -329,6 +341,7 @@ const BoardWrite = () => {
                 />
                 <input
                   type="button"
+                  onClick={handleCancle}
                   className="common_btn_cancle"
                   value="취소"
                 />
@@ -415,7 +428,12 @@ const BoardWrite = () => {
           </div>
           <div className="mt-8 text-center">
             <input type="submit" className="common_btn_up mr-2" value="등록" />
-            <input type="button" className="common_btn_cancle" value="취소" />
+            <input
+              type="button"
+              className="common_btn_cancle"
+              onClick={handleCancle}
+              value="취소"
+            />
           </div>
         </form>
       )}

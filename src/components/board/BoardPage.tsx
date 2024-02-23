@@ -15,6 +15,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
+import { Timestamp } from "firebase/firestore";
 import { firebaseApp } from "../../firebase-config";
 import CommentWritet from "../comment/CommentWrite";
 import { BoardHeadercontext } from "../context/BoardContext";
@@ -26,7 +27,7 @@ type Action = {
 interface FormType {
   uid: string;
   displayName: string;
-  timeData: Date;
+  timeData: Timestamp;
   title: string;
   content: string;
   isModify: boolean;
@@ -36,7 +37,7 @@ interface FormType {
 const initialUserForm: FormType = {
   uid: "",
   displayName: "",
-  timeData: new Date(),
+  timeData: Timestamp.now(),
   title: "",
   content: "",
   isModify: false,
@@ -179,12 +180,12 @@ const BoardPage = () => {
         console.error("Error getting download URLs:", error);
       });
   }, []);
-  const timeFuc = (timestamp: firestore.Timestamp) => {
+  const timeFuc = (timestamp: Timestamp) => {
     const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6;
     const date = new Date(milliseconds);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
   };
   return (
@@ -197,7 +198,7 @@ const BoardPage = () => {
         </p>
 
         <div className="p-2 h-80 border-b overflow-y-auto">
-          {userDataList.contentdd}
+          {userDataList.content}
           {imgList.map((item, index) => (
             <div key={index}>
               <img src={item} alt={`Image ${index}`} />

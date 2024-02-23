@@ -7,6 +7,7 @@ import {
   collection,
   setDoc,
   deleteDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { BoardHeadercontext } from "../context/BoardContext";
 
@@ -18,7 +19,7 @@ type Action =
 interface FormType {
   uid: string;
   displayName: string;
-  timeData: string;
+  timeData: Date;
   content: string;
   isModify: boolean;
   index: string;
@@ -40,7 +41,7 @@ const initialUserForm: FormType[] = [
   {
     uid: "",
     displayName: "",
-    timeData: "",
+    timeData: new Date(),
     content: "",
     isModify: false,
     index: "",
@@ -95,13 +96,6 @@ const CommentWritet = (props: PropsType) => {
   const userCommentCollection = collection(userDocREf, "comment");
 
   const date = new Date();
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
-  const parts = formattedDate.split("/");
-  const result = `${parts[2]}.${parts[0]}.${parts[1]}`;
 
   //댓글 추가
   const handleComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,7 +104,7 @@ const CommentWritet = (props: PropsType) => {
       const commentInput = {
         uid: userLoginUid,
         displayName: userLogindisplayName,
-        timeData: result,
+        timeData: date,
         content: commentValue,
         isModify: false,
         index: strIdComment,
@@ -193,7 +187,14 @@ const CommentWritet = (props: PropsType) => {
     userData();
     handleReplyexist();
   }, []);
-
+  const timeFuc = (timestamp: Timestamp) => {
+    const milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6;
+    const date = new Date(milliseconds);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
   const memoizedUserDataList = useMemo(() => userDataList, [userDataList]);
 
   return (
@@ -221,11 +222,14 @@ const CommentWritet = (props: PropsType) => {
           <ul>
             {userDataList.map((item, indexI) => {
               const commentid = item.index;
+              console.log(item.timeData);
               return (
                 <li key={indexI} className=" border-b relative">
                   <p className="p-2">
                     {item.displayName}{" "}
-                    <span className="text-xs ml-2">{item.timeData}</span>
+                    <span className="text-xs ml-2">
+                      {timeFuc(item.timeData)}
+                    </span>
                   </p>
                   {userLoginUid === item.uid ? (
                     <div className="group absolute right-0 top-2 ">
