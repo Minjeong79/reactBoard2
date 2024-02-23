@@ -19,7 +19,7 @@ type Action =
 interface FormType {
   uid: string;
   displayName: string;
-  timeData: Date;
+  timeData: Timestamp;
   content: string;
   isModify: boolean;
   index: string;
@@ -27,7 +27,7 @@ interface FormType {
 interface FormReplyType {
   uid: string;
   displayName: string;
-  timeData: string;
+  timeData: Timestamp;
   content: string;
   isModify: boolean;
   index: string;
@@ -41,7 +41,7 @@ const initialUserForm: FormType[] = [
   {
     uid: "",
     displayName: "",
-    timeData: new Date(),
+    timeData: Timestamp.now(),
     content: "",
     isModify: false,
     index: "",
@@ -51,7 +51,7 @@ const initialUserReplyForm: FormReplyType[] = [
   {
     uid: "",
     displayName: "",
-    timeData: "",
+    timeData: Timestamp.now(),
     content: "",
     isModify: false,
     index: "",
@@ -95,7 +95,7 @@ const CommentWritet = (props: PropsType) => {
   const userDocREf = doc(userCollection, paramsId.id);
   const userCommentCollection = collection(userDocREf, "comment");
 
-  const date = new Date();
+  // const date = new Date();
 
   //댓글 추가
   const handleComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -104,7 +104,7 @@ const CommentWritet = (props: PropsType) => {
       const commentInput = {
         uid: userLoginUid,
         displayName: userLogindisplayName,
-        timeData: date,
+        timeData: Timestamp.now(),
         content: commentValue,
         isModify: false,
         index: strIdComment,
@@ -276,7 +276,7 @@ const CommentWritet = (props: PropsType) => {
                         {item.index === it.commentIdx ? (
                           <div className="bg-slate-100 p-2">
                             <div className="text-right">
-                              {it.displayName} {it.timeData}
+                              {it.displayName} {timeFuc(it.timeData)}
                             </div>
                             <div className="h-16 overflow-y-auto">
                               {it.content}
