@@ -31,7 +31,7 @@ const Sign = () => {
   };
 
   return (
-    <div className="md:container mx-auto mt-20">
+    <div className="md:max-w-screen-sm  mx-auto mt-20">
       <h3 className="text-indigo-700 text-2xl font-bold">회원가입</h3>
       <div className="mt-4">
         <form onSubmit={hadleSubmit}>
