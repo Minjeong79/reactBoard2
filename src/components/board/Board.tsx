@@ -89,30 +89,7 @@ const Board = () => {
   };
   return (
     <div className="">
-      {/* <div className="flex ">
-        <input
-          type="text"
-          className="border rounded flex-1 mr-1 p-1 focus:outline-none focus:border-indigo-400"
-          placeholder="검색어 입력"
-        />
-        <button className="flex items-center bg-indigo-700 text-white p-1 rounded">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-3 h-3 stroke-white mr-0.5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
-          search
-        </button>
-      </div> */}
+     
       <ul className="mt-6">
         <li className="bg-slate-200 mb-2 text-sm p-2 justify-between rounded flex">
           <div>No.</div>
