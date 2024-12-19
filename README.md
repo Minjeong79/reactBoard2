@@ -10,7 +10,7 @@
 
 <h3>개발 환경</h3>
 <ul>
-      <li>Front : React, Ts, Context API, Scss</li>
+      <li>Front : React, Ts, Context API, Tailwind</li>
       <li>Back : firebase</li>
       <li>버전 및 이슈 관리 : Github</li>
       <li>디자인 : Figma</li>
@@ -32,68 +32,38 @@
 <h3>프로젝트 구조</h3>
 
 ```
-public
-index.html
-logo512.png
-│  └─ robots.txt
 ├─ src
 │  ├─ App.tsx
 │  ├─ components
 │  │  ├─ board
-│  │  │  ├─ Header.tsx
-│  │  │  ├─ board.tsx
-│  │  │  ├─ modifyForm.tsx
-│  │  │  └─ page.tsx
+Board.tsx
+│  │  │  ├─ BoardPage.tsx
+│  │  │  ├─ BoardWrite.tsx
+│  │  │  └─ Header.tsx
 │  │  ├─ comment
-│  │  │  ├─ Comment.tsx
 │  │  │  ├─ CommentModify.tsx
+│  │  │  ├─ CommentWrite.tsx
 │  │  │  └─ ReplyComment.tsx
-│  │  └─ users
-│  │     ├─ Form.tsx
-│  │     ├─ login.tsx
-│  │     └─ sign.tsx
-│  ├─ firebase.ts
-│  ├─ index.tsx
-│  ├─ logo.png
-│  ├─ react-app-env.d.ts
-│  ├─ redux
-│  │  ├─ reducer.ts
-│  │  ├─ slices
-│  │  │  ├─ ReplyComment
-│  │  │  │  └─ ReplyCommentSlice.ts
-│  │  │  ├─ boardItemDeleteSlice.ts
-│  │  │  ├─ boardItemModifySlice.ts
-│  │  │  ├─ boardItemSlice.ts
-│  │  │  ├─ boardPageLikedSlice.ts
-│  │  │  ├─ boardSlice.ts
-│  │  │  ├─ commentSlice
-│  │  │  │  ├─ commentDeleteSlice.ts
-│  │  │  │  ├─ commentModifySlice.ts
-│  │  │  │  └─ commentSlice.ts
-│  │  │  └─ loginSlice.ts
-│  │  ├─ store.ts
-│  │  └─ thunks
-│  │     ├─ ReplyCommentThunk
-│  │     │  └─ commentReplyThunk.ts
-│  │     ├─ boardDelteThunk.ts
-│  │     ├─ boardFormThunk.ts
-│  │     ├─ boardModifyThunk.ts
-│  │     ├─ boardPageLikeOverturnThunk.ts
-│  │     ├─ boardPageLikeThunks.ts
-│  │     └─ commentThunk
-│  │        ├─ commentDeleteThunk.ts
-│  │        ├─ commentModifiyThunk.ts
-│  │        └─ commentNewThunk.ts
-│  ├─ reportWebVitals.ts
-│  └─ scss
-│     ├─ main.css
-│     ├─ main.css.map
-│     ├─ main.scss
-│     ├─ style.css
-│     ├─ style.css.map
-│     └─ style.scss
-└─ /
-```
+│  │  ├─ common
+│  │  │  └─ Button.tsx
+│  │  ├─ context
+│  │  │  └─ BoardContext.tsx
+│  │  └─ user
+│  │     ├─ Login.tsx
+│  │     └─ Sign.tsx
+│  ├─ firebase-config.ts
+│  ├─ main.tsx
+│  ├─ style
+│  │  ├─ App.css
+│  │  ├─ index.css
+│  │  └─ output.css
+│  └─ vite-env.d.ts
+├─ storage.rules
+├─ tailwind.config.js
+├─ tsconfig.json
+├─ tsconfig.node.json
+└─ vite.config.ts
+
 
 
 
@@ -132,7 +102,7 @@ logo512.png
 </ul>
 
 <h3>프로젝트 후기</h3>
-Vite와 React를 활용해 CRUD 기능을 갖춘 게시판을 구현하며, 상태 관리 및 사용자 맞춤형 기능을 중심으로 설계했습니다. <br>
+Vite의 React를 활용해 CRUD 기능을 갖춘 게시판을 구현하며, 상태 관리 및 사용자 맞춤형 기능을 중심으로 설계했습니다. <br>
 Context API를 활용하여 상태 관리의 편리함을 체감할 수 있었고<br>
 사용자 정보를 기반으로 동적으로 UI가 변경되도록 설계 하였습니다.<br>
 로그인한 사용자만 수정 및 삭제 버튼이 활성화되도록 구현하여 보안성과 접근성을 강화 하였습니다.<br>
