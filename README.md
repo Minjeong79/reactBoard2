@@ -4,11 +4,11 @@
         <li>배포 url : https://new-context-board.web.app/</li>
 </ul>
 
-<h3>프로젝트 소개</h3>
+<h3>🌟프로젝트 소개</h3>
 회원가입, 로그인 후 사용 할 수 있는 게시판 입니다.
 
 
-<h3>개발 환경</h3>
+<h3>🚀개발 환경</h3>
 <ul>
       <li>Front : React, Ts, Context API, Tailwind</li>
       <li>Back : firebase</li>
@@ -18,7 +18,7 @@
 </ul>
 
 
-<h3>채택한 개발 기술</h3>
+<h3>🛠 채택한 개발 기술</h3>
 <ul>
       <li> 상태 관리에는 Context API 사용<br>
            React의 Context API는 상태 관리 라이브러리를 사용하지 않고도 React에 내장된 훅을 통해 상태 관리를 할 수 있는 도구입니다.<br> 
@@ -29,7 +29,7 @@
 
 
 
-<h3>프로젝트 구조</h3>
+<h3>📂프로젝트 구조</h3>
 
 ```
 ├─ src
@@ -67,7 +67,7 @@ Board.tsx
 
 
 
-<h3>페이지 별 주요 기능</h3>
+<h3>🗺 페이지 별 주요 기능</h3>
 <h4>[ 메인 페이지 ] </h4>
 <img src="https://github.com/user-attachments/assets/4cb00862-14d2-44cc-add7-c77a5f5ce4e5" alt="메인 페이지"/>
 <ul>
@@ -101,7 +101,7 @@ Board.tsx
       <li>휴지통 아이콘 선택 시 업로드한 이미지 제거 됩니다.</li>
 </ul>
 
-<h3>프로젝트 후기</h3>
+<h3>🖐프로젝트 후기</h3>
 Vite의 React를 활용해 CRUD 기능을 갖춘 게시판을 구현하며, 상태 관리 및 사용자 맞춤형 기능을 중심으로 설계했습니다. <br>
 Context API를 활용하여 상태 관리의 편리함을 체감할 수 있었고<br>
 사용자 정보를 기반으로 동적으로 UI가 변경되도록 설계 하였습니다.<br>
